@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>food_stocker</title>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="./js/index.js"></script>
 </head>
 <body>
 	<h1>food_stocker</h1>
@@ -32,8 +36,13 @@
 	?>
 
 	<p>検索</p>
-	<input type="text" name="search" size="20" value="<?php echo $search_words ?>">
-	<p><?php echo $search_num ?>つあります</p>
+	<form id="searchform" method="post">
+		<div>
+			<input type="text" name="search_term" id="search_term" />
+		</div>
+		<div id="check_num">在庫確認</div>
+	</form>
+	<p id="stock_num"></p>
 
 	<p>在庫登録</p>
 	<form method="post" action="index.php">
@@ -43,7 +52,7 @@
 		<p>
 			<input type="text" name="reg_num" size="3"><span>つ</span>
 		</p>
-		<!--<p>賞味期限</p>
+		<p>賞味期限</p>
 		<p>
 			あと<input type="text" name="reg_limit" size="3">日くらい
 		</p>
@@ -52,7 +61,6 @@
 			<input type="text" name="reg_month" size="2">月
 			<input type="text" name="reg_day" size="2">日まで
 		</p>
-		 -->
 		<button type="submit">登録</button>
 		<p>キムチの在庫を<?php echo $reg_num?>つで登録しました！</p>
 		<button>買い物リストに追加</button>

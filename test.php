@@ -23,31 +23,24 @@
 	<script type='text/javascript'>
 
 $(document).ready(function(){
+	// オートコンプリート
   $("#search_term").keyup(function(e){
     e.preventDefault();
     var search_val = $("#search_term").val();
 
-    $.post("autocomplete.php", {search_term : search_val})
-    .done( function(data){
-		alert('できた');
+    $.post("./lib/autocomplete.php", {search_term : search_val})
+    .done(function(data){
+		if(data.length>0){
+	         $("#search_term").autocomplete({
+	           source: data
+	         });
+	       }
     })
 	.fail( function() {
 		alert('error');
 	})
 	.always ( function() {
-		alert('おわり');
 	});
-});
-
-//     $.post("autocomplete.php", {search_term : search_val}, function(data){
-//     	alert(search_val);
-//       if(data.length>0){
-//         $("#search_term").autocomplete({
-//           source: data
-//         });
-//       }
-//     })
-//  });
 });
 </script>
 </body>

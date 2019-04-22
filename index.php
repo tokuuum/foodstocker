@@ -11,6 +11,7 @@ $shopping_datas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $search_words = "けんさくわーど";
 $search_num = 100;
 $reg_num = 0;
+
 include ('./lib/index.php');
 
 ?>
