@@ -44,26 +44,7 @@
 	</form>
 	<p id="stock_num"></p>
 
-	<p>在庫登録</p>
-	<form method="post" action="index.php">
-		<p>
-			<input type="text" name="reg_food" size="20">
-		</p>
-		<p>
-			<input type="text" name="reg_num" size="3"><span>つ</span>
-		</p>
-		<p>賞味期限</p>
-		<p>
-			あと<input type="text" name="reg_limit" size="3">日くらい
-		</p>
-		<p>
-			<input type="text" name="reg_year" size="4">年
-			<input type="text" name="reg_month" size="2">月
-			<input type="text" name="reg_day" size="2">日まで
-		</p>
-		<button type="submit">登録</button>
-		<p>キムチの在庫を<?php echo $reg_num?>つで登録しました！</p>
-		<button>買い物リストに追加</button>
-	</form>
+	<p><a href="add.php">在庫登録</a></p>
+
 </body>
 </html>
