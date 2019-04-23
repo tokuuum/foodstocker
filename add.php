@@ -1,9 +1,9 @@
 <?php
 include ('./lib/common.php');
 $mode = get_mode();
-echo $mode;
+echo "MODE:".$mode.";";
 
-$complete = "";
+session_start();
 
 if ($mode == "add") {
     $f_name = isset($_POST['reg_food']) ? $_POST['reg_food'] : "";
@@ -16,7 +16,20 @@ if ($mode == "add") {
     $limited = isset($_POST['limited']) ? $_POST['limited'] : "";
     echo "＜".$f_name.$f_num.$f_days.$f_limit_date."＞";
 
-    $complete = $f_name."の在庫を".$f_num."つで登録しました！";
+    // 買い物リスト追加ボタン押下時
+    if(!isset($_SESSION['comp_txt'])) {
+        echo "セッション無いよ～～～";
+        $pdo2 = get_conn();
+        $stmt2 = $pdo2->prepare("update foods set shopping_list=1 where name = :name");
+        $stmt2->bindValue(':name', $f_name);
+        $stmt2->execute();
+
+        $_SESSION['list_txt'] = "update完了";
+    }
+    else{
+        echo "セッションあるよ～～～";
+    }
+
 
 // 入力チェック
     $error = array();
@@ -61,6 +74,9 @@ if ($mode == "add") {
         $stmt->execute();
 
 
+        $_SESSION['comp_txt']= $f_name."の在庫を".$f_num."つで登録しました！";
+
+
 
         redirect('add.php');
     }
@@ -72,8 +88,13 @@ else {
     $f_year = "";
     $f_month = "";
     $f_day = "";
-    $comp_txt = $complete;
+    if(isset($_SESSION['comp_txt']) == false) {
+        echo "セッション無いよ";
+    }
+    else{
+        echo "セッションあるよ".isset($_SESSION['comp_txt']);
+        session_destroy();
+    }
     include ('./lib/add.php');
 }
-
 ?>

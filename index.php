@@ -8,7 +8,7 @@ $stmt = $pdo->prepare("select name from foods where shopping_list = 1");
 $stmt->execute();
 $shopping_datas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$search_words = "けんさくわーど";
+$search_words = "けんさくわあど";
 $search_num = 100;
 $reg_num = 0;
 

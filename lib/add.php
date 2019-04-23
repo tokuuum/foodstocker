@@ -3,11 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>food_stocker</title>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 </head>
-<script type="text/javascript">
-var js_test = <?php echo $complete; ?>
-alert(js_test);
-</script>
 <body>
 	<h1>在庫登録</h1>
     <form method="post" action="add.php">
@@ -47,12 +46,23 @@ alert(js_test);
 					<br>
 					</td>
 			</tr>
-			<tr>
-				<td>
-					<p></p>
-					<p>買い物リストに追加</p>
-				</td>
-			</tr>
+					<?php
+					  if(isset($_SESSION['comp_txt'])) {
+					    print("<tr><td><p>".$_SESSION['comp_txt']."</p>
+					    	<button id='add_shoppinglist'>買い物リストに追加</button></td></tr>");
+					    // 正常終了したらセッションを終了する
+					    //session_destroy();
+					  } else {
+					    //print("\$_SESSION['comp_txt']はセットされていません。<br>");
+					  }
+					?>
+					<?php
+					if(isset($_SESSION['list_txt'])) {
+					    print("<tr><td><p>".$_SESSION['list_txt']."を買い物リストに追加しました</p></td></tr>");
+					    // 正常終了したらセッションを終了する
+					    //session_destroy();
+					}
+					?>
 		</table>
 		<input type="submit" value="追加">
 	</form>
