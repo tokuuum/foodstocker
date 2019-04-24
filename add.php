@@ -2,7 +2,6 @@
 include ('./lib/common.php');
 $mode = get_mode();
 echo "MODE:".$mode.";";
-
 session_start();
 
 if ($mode == "add") {
@@ -14,22 +13,6 @@ if ($mode == "add") {
     $f_day = isset($_POST['reg_day']) ? $_POST['reg_day'] : "";
     $f_limit_date = $f_year.$f_month.$f_day;
     $limited = isset($_POST['limited']) ? $_POST['limited'] : "";
-    echo "＜".$f_name.$f_num.$f_days.$f_limit_date."＞";
-
-    // 買い物リスト追加ボタン押下時
-    if(!isset($_SESSION['comp_txt'])) {
-        echo "セッション無いよ～～～";
-        $pdo2 = get_conn();
-        $stmt2 = $pdo2->prepare("update foods set shopping_list=1 where name = :name");
-        $stmt2->bindValue(':name', $f_name);
-        $stmt2->execute();
-
-        $_SESSION['list_txt'] = "update完了";
-    }
-    else{
-        echo "セッションあるよ～～～";
-    }
-
 
 // 入力チェック
     $error = array();
@@ -49,9 +32,7 @@ if ($mode == "add") {
     else {
         //エラーが無い場合
         //DB登録して一覧へ遷移する
-
         $now_dt = date("Y-m-d H:i:s");
-        $null = null;
         $pdo = get_conn();
         $stmt = $pdo->prepare("insert into foods(name, stock, limit_date, limit_day, shopping_list, create_dt, update_dt)
                 values(:f_name, :f_num, :limit_date, :limit_day, :shopping_list, :dt, :dt)");
@@ -73,15 +54,22 @@ if ($mode == "add") {
         $stmt->bindValue(':dt', $now_dt);
         $stmt->execute();
 
-
         $_SESSION['comp_txt']= $f_name."の在庫を".$f_num."つで登録しました！";
-
-
-
+        $_SESSION['f_name']= '食べ物：'.$f_name;
         redirect('add.php');
     }
 }
-else {
+else if($mode == "add_list"){
+    $aaa = $_SESSION['f_name'];
+    $_SESSION['add_list'] = $aaa;
+
+    $pdo = get_conn();
+    $stmt = $pdo->prepare("update foods set shopping_list=1 where name = :name");
+    $stmt->bindValue(':name', $aaa);
+    $stmt->execute();
+
+    redirect('add.php');
+} else {
     $f_name = "";
     $f_num = "";
     $f_days = "";
@@ -89,10 +77,10 @@ else {
     $f_month = "";
     $f_day = "";
     if(isset($_SESSION['comp_txt']) == false) {
-        echo "セッション無いよ";
+        echo "初期表示";
     }
     else{
-        echo "セッションあるよ".isset($_SESSION['comp_txt']);
+        echo "初期表示ではない。comp_txt:".isset($_SESSION['comp_txt']);
         session_destroy();
     }
     include ('./lib/add.php');
