@@ -53,33 +53,21 @@
 		<input type="submit" value="追加">
 	</form>
 	<?php
-if (isset($_SESSION['comp_txt'])) {
-    print("<p>" . $_SESSION['comp_txt'] . "</p>
-<form method='post' action='add.php'>
-<input type='hidden' name='mode' value='add_list'>
-<input type='submit' value='買い物リストに追加'></form>");
-    // 正常終了したらセッションを終了する
-    //session_destroy();
-}
-
-if (isset($_SESSION['add_list'])) {
-    print ("<p>addlistあるよ</p>");
-    //session_destroy();
-}else{
-    print ("<p>addlistないよ</p>");
-}
-
-if (isset($_SESSION['f_name'])) {
-    print ("<p>f_nameあるよ:".$_SESSION['f_name']."</p>");
-}else{
-    print ("<p>f_nameないよ</p>");
-}
-if (isset($_SESSION['add_list'])) {
-    print("<tr><td><p>" . $_SESSION['add_list'] . "を買い物リストに追加しました</p></td></tr>");
-    // 正常終了したらセッションを終了する
-    // session_destroy();
-}
-?>
-
+    if (isset($_SESSION['comp_txt'])) {
+        print("<p>" . $_SESSION['comp_txt'] . "</p>
+    <form method='post' action='add.php'>
+    <input type='hidden' name='mode' value='add_list'>
+    <input type='hidden' name='add_name' value='".$_SESSION['f_name']."'>
+    <input type='submit' value='買い物リストに追加'></form>");
+        // 正常終了したらセッションを終了する
+        // session_destroy();
+    }
+    if (isset($_SESSION['add_list'])) {
+        print("<tr><td><p>" . $_SESSION['add_list'] . "を買い物リストに追加しました</p></td></tr>");
+        // 正常終了したらセッションを終了する
+        // session_destroy();
+    }
+    ?>
+    <p><a href="../">戻る</a></p>
 </body>
 </html>

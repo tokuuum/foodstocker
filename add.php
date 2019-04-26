@@ -34,20 +34,23 @@ if ($mode == "add") {
         //DB登録して一覧へ遷移する
         $now_dt = date("Y-m-d H:i:s");
         $pdo = get_conn();
-        $stmt = $pdo->prepare("insert into foods(name, stock, limit_date, limit_day, shopping_list, create_dt, update_dt)
-                values(:f_name, :f_num, :limit_date, :limit_day, :shopping_list, :dt, :dt)");
+        $stmt = $pdo->prepare("insert into foods(name, stock, limit_date, about_flag, shopping_list, create_dt, update_dt)
+                values(:f_name, :f_num, :limit_date, :about_flag, :shopping_list, :dt, :dt)");
         $stmt->bindValue(':f_name', $f_name);
         $stmt->bindValue(':f_num', $f_num);
         if ($limited == 1) {
-            $stmt->bindValue(':limit_day', $f_days);
-            $stmt->bindValue(':limit_date', null);
+            // あと何日くらい
+            $f_days = date("Y-m-d H:i:s", strtotime($f_days."day"));
+            $stmt->bindValue(':about_flag', 1);
+            $stmt->bindValue(':limit_date', $f_days);
         }
         else if ($limited == 2) {
-            $stmt->bindValue(':limit_day', null);
+            // 何日まで
+            $stmt->bindValue(':about_flag', 0);
             $stmt->bindValue(':limit_date', $f_limit_date);
         }
         else {
-            $stmt->bindValue(':limit_day', null);
+            $stmt->bindValue(':about_flag', 1);
             $stmt->bindValue(':limit_date', null);
         }
         $stmt->bindValue(':shopping_list', 0);
@@ -55,17 +58,17 @@ if ($mode == "add") {
         $stmt->execute();
 
         $_SESSION['comp_txt']= $f_name."の在庫を".$f_num."つで登録しました！";
-        $_SESSION['f_name']= '食べ物：'.$f_name;
+        $_SESSION['f_name'] = $f_name;
         redirect('add.php');
     }
 }
 else if($mode == "add_list"){
-    $aaa = $_SESSION['f_name'];
-    $_SESSION['add_list'] = $aaa;
+    $add_name = isset($_POST['add_name']) ? $_POST['add_name'] : "";
+    $_SESSION['add_list'] = $add_name;
 
     $pdo = get_conn();
     $stmt = $pdo->prepare("update foods set shopping_list=1 where name = :name");
-    $stmt->bindValue(':name', $aaa);
+    $stmt->bindValue(':name', $add_name);
     $stmt->execute();
 
     redirect('add.php');
@@ -80,7 +83,7 @@ else if($mode == "add_list"){
         echo "初期表示";
     }
     else{
-        echo "初期表示ではない。comp_txt:".isset($_SESSION['comp_txt']);
+        // 必要
         session_destroy();
     }
     include ('./lib/add.php');

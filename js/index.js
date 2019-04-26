@@ -24,7 +24,11 @@ $(document).ready(function() {
 		$.post("./lib/stock.php", {
 			search_term : search_val
 			}).done(function(data) {
-			$('#stock_num').text(data + "つあります");
+				if(data != ""){
+					$('#stock_num').text(data + "つあります");
+				} else {
+					$('#stock_num').text("存在しません");
+				}
 			}).fail(function() {
 				alert('在庫数error');
 			}).always(function() {

@@ -10,20 +10,28 @@
 </head>
 <body>
 	<h1>food_stocker</h1>
-	<!--<div>
-		<ul>
-			<li>りんご</li>
-			<li>バター</li>
-		</ul>
-		<p>の賞味期限が近づいています！</p>
-	</div>
-	<div>
-		<ul>
-			<li>ガーリックパウダー</li>
-		</ul>
-		<p>の賞味期限が切れています！</p>
-	</div>
-    -->
+	<?php
+	if (count($bad_food) != 0) {
+	    echo '<div><ul>';
+	    foreach ($bad_food as $row){
+	        echo '<li>'.$row['name'].'</li>';
+	    }
+	    echo '</ul>';
+	    echo '<p>の賞味期限が切れています！</p>';
+	    echo '</div>';
+	}
+    ?>
+    <?php
+    if (count($near_food) != 0) {
+	    echo '<div><ul>';
+	    foreach ($near_food as $row){
+	        echo '<li>'.$row['name'].'</li>';
+	    }
+	    echo '</ul>';
+	    echo '<p>の賞味期限が近づいています！</p>';
+	    echo '</div>';
+	}
+    ?>
 	<p>買い物リスト</p>
 	<?php
 	if (count($shopping_datas) != 0) {
