@@ -35,9 +35,9 @@
 	<p>買い物リスト</p>
 	<?php
 	if (count($shopping_datas) != 0) {
-	    echo '<ul>';
+	    echo '<ul id="shopping_list">';
 	    foreach($shopping_datas as $row){
-    	    echo '<li>'.$row['name'].'</li>';
+    	    echo '<li><p>'.$row['name'].'</p><span class="bought">買った</span></li>';
     	}
     	echo '</ul>';
 	}

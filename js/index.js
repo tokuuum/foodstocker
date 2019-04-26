@@ -19,6 +19,7 @@ $(document).ready(function() {
 		});
 	});
 
+	// 在庫確認
 	$("#check_num").click( function(){
 		var search_val = $("#search_term").val();
 		$.post("./lib/stock.php", {
@@ -32,6 +33,20 @@ $(document).ready(function() {
 			}).fail(function() {
 				alert('在庫数error');
 			}).always(function() {
+		});
+	});
+
+	// 買った
+	$(".bought").click( function(){
+		var name = $(this).parent().find("p").text();
+		$.post("./lib/bought.php",
+				name
+		).done(function(){
+			alert("111");
+		}).fail(function(){
+
+		}).always(function(){
+
 		});
 	});
 });
