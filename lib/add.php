@@ -3,12 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>food_stocker</title>
-<link rel="stylesheet"
-	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="./js/index.js"></script>
 </head>
 <body>
 	<h1>在庫登録</h1>
@@ -20,8 +18,9 @@
 			</tr>
 			<tr>
 				<td>
-					<p style="color: red"><?php echo @$error['f_name'] ?></p> <input
-					type="text" name="reg_food" size="20" value="<?php echo $f_name ?>">
+					<p style="color: red"><?php echo @$error['f_name'] ?></p>
+					<!--<input type="text" name="reg_food" size="20" value="<?php echo $f_name ?>"> -->
+					<input type="text" name="reg_food" id="search_term" size="20" value="<?php echo $f_name ?>" />
 				</td>
 			</tr>
 			<tr>

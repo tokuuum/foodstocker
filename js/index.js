@@ -39,10 +39,11 @@ $(document).ready(function() {
 	// 買った
 	$(".bought").click( function(){
 		var name = $(this).parent().find("p").text();
-		$.post("./lib/bought.php",
-				name
-		).done(function(){
-			alert("111");
+		//alert(name);
+		$.post("./lib/bought.php", {
+				name : $(this).parent().find("p").text()
+		}).done(function(data){
+			alert(data);
 		}).fail(function(){
 
 		}).always(function(){
