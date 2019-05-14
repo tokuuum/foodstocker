@@ -34,28 +34,62 @@ if ($mode == "add") {
         //DB登録して一覧へ遷移する
         $now_dt = date("Y-m-d H:i:s");
         $pdo = get_conn();
-        $stmt = $pdo->prepare("insert into foods(name, stock, limit_date, about_flag, shopping_list, create_dt, update_dt)
-                values(:f_name, :f_num, :limit_date, :about_flag, :shopping_list, :dt, :dt)");
-        $stmt->bindValue(':f_name', $f_name);
-        $stmt->bindValue(':f_num', $f_num);
-        if ($limited == 1) {
-            // あと何日くらい
-            $f_days = date("Y-m-d H:i:s", strtotime($f_days."day"));
-            $stmt->bindValue(':about_flag', 1);
-            $stmt->bindValue(':limit_date', $f_days);
-        }
-        else if ($limited == 2) {
-            // 何日まで
-            $stmt->bindValue(':about_flag', 0);
-            $stmt->bindValue(':limit_date', $f_limit_date);
-        }
-        else {
-            $stmt->bindValue(':about_flag', 1);
-            $stmt->bindValue(':limit_date', null);
-        }
-        $stmt->bindValue(':shopping_list', 0);
-        $stmt->bindValue(':dt', $now_dt);
+
+        //登録済みか確認
+        $stmt = $pdo ->prepare("select count(*) from foods where name =:name");
+        $stmt->bindValue(':name', $f_name);
         $stmt->execute();
+        $check = $stmt->rowCount();
+        if ($check > 0) {
+            // 更新
+            $stmt = $pdo->prepare("update foods set stock = :stock, limit_date = :limit_date, about_flag = :about_flug, shopping_list = :shopping_list, update_dt = :update_dt where name = :name");
+            $stmt->bindValue(':name', $f_name);
+            $stmt->bindValue(':stock', $f_num);
+            if ($limited == 1) {
+                // あと何日くらい
+                $f_days = date("Y-m-d H:i:s", strtotime($f_days."day"));
+                $stmt->bindValue(':about_flug', 1);
+                $stmt->bindValue(':limit_date', $f_days);
+            }
+            else if ($limited == 2) {
+                // 何日まで
+                $stmt->bindValue(':about_flug', 0);
+                $stmt->bindValue(':limit_date', $f_limit_date);
+            }
+            else {
+                $stmt->bindValue(':about_flug', 1);
+                $stmt->bindValue(':limit_date', null);
+            }
+            $stmt->bindValue(':shopping_list', 0);
+            $stmt->bindValue(':update_dt', $now_dt);
+            $stmt->execute();
+
+        }else{
+            // 登録
+            $stmt = $pdo->prepare("insert into foods(name, stock, limit_date, about_flag, shopping_list, create_dt, update_dt)
+                    values(:f_name, :f_num, :limit_date, :about_flag, :shopping_list, :dt, :dt)");
+            $stmt->bindValue(':f_name', $f_name);
+            $stmt->bindValue(':f_num', $f_num);
+            if ($limited == 1) {
+                // あと何日くらい
+                $f_days = date("Y-m-d H:i:s", strtotime($f_days."day"));
+                $stmt->bindValue(':about_flag', 1);
+                $stmt->bindValue(':limit_date', $f_days);
+            }
+            else if ($limited == 2) {
+                // 何日まで
+                $stmt->bindValue(':about_flag', 0);
+                $stmt->bindValue(':limit_date', $f_limit_date);
+            }
+            else {
+                $stmt->bindValue(':about_flag', 1);
+                $stmt->bindValue(':limit_date', null);
+            }
+            $stmt->bindValue(':shopping_list', 0);
+            $stmt->bindValue(':dt', $now_dt);
+            $stmt->execute();
+
+        }
 
         $_SESSION['comp_txt']= $f_name."の在庫を".$f_num."つで登録しました！";
         $_SESSION['f_name'] = $f_name;
