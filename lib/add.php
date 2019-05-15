@@ -16,44 +16,59 @@
 	<h1>在庫登録</h1>
 	<form method="post" action="add.php">
 		<input type="hidden" name="mode" value="add">
-		<table border="1">
-			<tr>
+		<table class="table table-hover">
+		<tbody>
+			<tr class="table-warning">
 				<th>食材名</th>
 			</tr>
 			<tr>
 				<td>
 					<p style="color: red"><?php echo @$error['f_name'] ?></p>
 					<!--<input type="text" name="reg_food" size="20" value="<?php echo $f_name ?>"> -->
-					<input type="text" name="reg_food" id="search_term" size="20" value="<?php echo $f_name ?>" />
+					<input type="text" name="reg_food" class="form-control" id="search_term" size="20" value="<?php echo $f_name ?>" />
 				</td>
 			</tr>
-			<tr>
+			<tr class="table-warning">
 				<th>個数</th>
 			</tr>
 			<tr>
 				<td>
-					<p style="color: red"><?php echo @$error['f_num'] ?></p> <input
-					type="text" name="reg_num" size="3" value="<?php echo $f_num ?>"><span>つ</span>
+					<p style="color: red"><?php echo @$error['f_num'] ?></p>
+					<input type="text" name="reg_num" class="form-control" size="3" value="<?php echo $f_num ?>"><span>つ</span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="table-warning">
 				<th>賞味期限</th>
 			</tr>
 			<tr>
-				<td><input type="radio" name="limited" value="0">なし<br> <input
-					type="radio" name="limited" value="1" checked="checked"> <span>あと <input
-						type="text" name="reg_limit" value="<?php echo $f_days ?>"
-						size="3">日くらい
-				</span> <br> <input type="radio" name="limited" value="2"> <span> <input
-						type="text" name="reg_year" value="<?php echo $f_year ?>" size="4">年
-						<input type="text" name="reg_month" value="<?php echo $f_month ?>"
-						size="2">月 <input type="text" name="reg_day"
-						value="<?php echo $f_day ?>" size="2">日まで
-				</span> <br></td>
+				<td>
+				<div class="form-group">
+    				<div class="custom-control custom-radio">
+    				<input type="radio" id="customRadio1" name="limited" class="custom-control-input" value="0" checked="checked">
+          			<label class="custom-control-label" for="customRadio1">なし</label>
+        			</div>
+        			<div class="custom-control custom-radio">
+        			<input type="radio" id="customRadio2" name="limited" class="custom-control-input" value="1">
+          			<label class="custom-control-label" for="customRadio2">
+          			<span>あと <input type="text" name="reg_limit" class="form-control" value="<?php echo $f_days ?>" size="3">日くらい</span>
+          			</label>
+        			</div>
+        			<div class="custom-control custom-radio">
+    				<input type="radio" id="customRadio3" name="limited" class="custom-control-input" value="2">
+          			<label class="custom-control-label" for="customRadio3">
+          			<span>
+            				<input type="text" name="reg_year" class="form-control" value="<?php echo $f_year ?>" size="4">年
+            				<input type="text" name="reg_month" class="form-control" value="<?php echo $f_month ?> "size="2">月
+            				<input type="text" name="reg_day" class="form-control" value="<?php echo $f_day ?>" size="2">日まで
+        				</span>
+        			</label>
+        			</div>
+    			</div>
+				</td>
 			</tr>
-
+		</tbody>
 		</table>
-		<input type="submit" value="追加">
+		<input type="submit" class="btn btn-primary" value="追加">
 	</form>
 	<?php
     if (isset($_SESSION['comp_txt'])) {
@@ -71,6 +86,6 @@
         // session_destroy();
     }
     ?>
-    <p><a href="../">戻る</a></p>
+    <p><a class="btn btn-primary" href="../">戻る</a></p>
 </body>
 </html>
